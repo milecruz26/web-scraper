@@ -1,3 +1,13 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# esbuild directories
+.esbuild
+
 # Logs
 logs
 *.log
@@ -36,10 +46,6 @@ bower_components
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
-
-# Dependency directories
-node_modules/
-jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -107,9 +113,6 @@ dist
 
 # Docusaurus cache and generated files
 .docusaurus
-
-# Serverless directories
-.serverless/
 
 # FuseBox cache
 .fusebox/
