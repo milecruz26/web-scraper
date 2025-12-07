@@ -1,17 +1,7 @@
 import * as puppeteer from 'puppeteer';
+import { Product } from 'src/interface/Product';
 
-interface Product {
-  productId: string;
-  name: string;
-  price: number | string;
-  url: string;
-}
-
-interface ListCategory {
-  [category: string]: Product[];
-}
-
-async function scrapingAmazonBestSellers() {
+export async function scrapingAmazonBestSellers(): Promise<Product[]> {
   console.log('INICIANDO SCRAPING...');
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -21,21 +11,21 @@ async function scrapingAmazonBestSellers() {
 
   const PRODUCT_CONTAINER_SELECTOR = '[data-a-carousel-options]';
   const productsCarousel = await page.$$(PRODUCT_CONTAINER_SELECTOR);
-  const topProducts: ListCategory = {};
+  const topProducts: Product[] = [];
 
   try {
     for (const product of productsCarousel) {
 
       const category = await product.$eval(".a-carousel-heading", item =>
-        item.textContent?.trim() ?? null
+        item.textContent?.trim().split("em ")[1] ?? null
       )
-      const formattedCategory = category
-        ? `Os 3 ${category}`
-        : null;
+      // const formattedCategory = category
+      //   ? `Os 3 ${category}`
+      //   : null;
 
-      if (formattedCategory && !topProducts[formattedCategory]) {
-        topProducts[formattedCategory] = [];
-      }
+      // if (formattedCategory && !topProducts[formattedCategory]) {
+      //   topProducts[formattedCategory] = [];
+      // }
 
       const productCards = await product.$$(".a-carousel-card");
 
@@ -58,32 +48,39 @@ async function scrapingAmazonBestSellers() {
             ? parseFloat(
               productPrice.replace("R$", "").replace(".", "").replace(",", ".").trim()
             )
-            : "Produto sem preço";
+            : 0.00;
 
         const productUrl = await card.$eval("a", item =>
           item.getAttribute("href") ?? 'Produto sem URL'
         );
 
         if (productName) {
-          topProducts[formattedCategory!].push({
+          topProducts.push({
             productId: productId,
+            category: category ?? 'Categoria desconhecida',
             name: productName,
             price: parsedPrice,
             url: `https://www.amazon.com.br${productUrl}`,
           });
         }
+        // if (productName) {
+        //   topProducts[formattedCategory!].push({
+        //     productId: productId,
+        //     name: productName,
+        //     price: parsedPrice,
+        //     url: `https://www.amazon.com.br${productUrl}`,
+        //   });
+        // }
       }
 
     }
     console.log("RESULTADO FINAL:", topProducts);
+    console.log('SCRAPING FINALIZADO.');
     await browser.close();
+    return topProducts;
 
   } catch (error) {
     console.log("ERRO DURANTE A EXTRAÇÃO:", error);
     await browser.close();
   }
-
-
-  console.log('SCRAPING FINALIZADO.');
 }
-scrapingAmazonBestSellers().catch(console.error);
