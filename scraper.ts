@@ -4,6 +4,7 @@ interface Product {
   productId: string;
   name: string;
   price: number | string;
+  url: string;
 }
 
 interface ListCategory {
@@ -59,11 +60,16 @@ async function scrapingAmazonBestSellers() {
             )
             : "Produto sem preço";
 
+        const productUrl = await card.$eval("a", item =>
+          item.getAttribute("href") ?? 'Produto sem URL'
+        );
+
         if (productName) {
           topProducts[formattedCategory!].push({
             productId: productId,
             name: productName,
-            price: parsedPrice
+            price: parsedPrice,
+            url: `https://www.amazon.com.br${productUrl}`,
           });
         }
       }
