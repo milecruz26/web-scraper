@@ -23,13 +23,20 @@ export const getProductsByCategory: APIGatewayProxyHandler = async () => {
     const products = result.Items as Product[] || [];
 
     const grouped: GroupedProducts = products.reduce((acc, product) => {
-      const { category, ...productDetails } = product;
+      const { category } = product;
+
+      const orderedProductDetails = {
+        productId: product.productId,
+        name: product.name,
+        price: product.price,
+        url: product.url,
+      };
 
       if (!acc[category]) {
         acc[category] = [];
       }
 
-      acc[category].push(productDetails);
+      acc[category].push(orderedProductDetails as Omit<Product, 'category'>);
 
       return acc;
     }, {} as GroupedProducts);
