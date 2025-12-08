@@ -1,6 +1,10 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import getProducts from '@functions/products';
+import scraper from '@functions/scraping';
+
+
+
 
 const serverlessConfiguration: AWS = {
   service: 'web-scraper',
@@ -17,7 +21,7 @@ const serverlessConfiguration: AWS = {
           'dynamodb:Scan',
           'dynamodb:PutItem',
         ],
-        Resource: 'arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ProductsTable',
+        Resource: 'arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ProductsBestSellers',
       },
     ],
     apiGateway: {
@@ -30,7 +34,11 @@ const serverlessConfiguration: AWS = {
     },
   },
 
-  functions: { hello },
+  functions: {
+    getProducts: getProducts,
+    scraper: scraper,
+
+  },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -38,12 +46,16 @@ const serverlessConfiguration: AWS = {
       minify: false,
       sourcemap: true,
       exclude: ['aws-sdk'],
-      target: 'node14',
+      externals: ['puppeteer-core', 'chromium-bidi', 'puppeteer'],
+      target: 'node18',
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
     },
   },
+
+
+
   resources: {
     Resources: {
       ProductsTable: {
