@@ -3,6 +3,8 @@ import type { AWS } from '@serverless/typescript';
 import getProducts from '@functions/products';
 import scraper from '@functions/scraping';
 import getProductsByCategory from '@functions/productsByCategory';
+import getProductById from '@functions/products/getProductById';
+import deleteProductById from '@functions/products/deleteProductById';
 
 
 
@@ -21,6 +23,7 @@ const serverlessConfiguration: AWS = {
           'dynamodb:GetItem',
           'dynamodb:Scan',
           'dynamodb:PutItem',
+          'dynamodb:DeleteItem'
         ],
         Resource: 'arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/ProductsBestSellers',
       },
@@ -38,7 +41,9 @@ const serverlessConfiguration: AWS = {
   functions: {
     scraper: scraper,
     getProducts: getProducts,
-    getProductsByCategory: getProductsByCategory
+    getProductsByCategory: getProductsByCategory,
+    getProductById: getProductById,
+    deleteProductById: deleteProductById,
 
   },
   package: { individually: true },
