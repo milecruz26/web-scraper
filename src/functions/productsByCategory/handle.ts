@@ -2,9 +2,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { Product } from "src/interface/Product";
-
-const REGION = 'us-east-1';
-const TABLE_NAME = 'ProductsBestSellers';
+import { REGION, TABLE_NAME } from "@libs/constants";
 
 const dbClient = new DynamoDBClient({ region: REGION });
 const docClient = DynamoDBDocumentClient.from(dbClient);
