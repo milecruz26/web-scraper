@@ -1,10 +1,10 @@
-import { handleScraperForDb } from './src/functions/scraping/handleScraperForDb';
+import { scraperForDb } from './src/functions/scraping/handle';
 
 async function testLocal() {
   console.log('EXECUTANDO TESTE LOCAL DE SCRAPING E DB SAVE');
 
   try {
-    const result = await handleScraperForDb();
+    const result = await scraperForDb();
 
     console.log('Resposta do Handler:', JSON.parse(result.body));
     console.log('Status HTTP:', result.statusCode);

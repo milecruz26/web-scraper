@@ -7,7 +7,7 @@ const dbClient = new DynamoDBClient({ region: REGION });
 const docClient = DynamoDBDocumentClient.from(dbClient);
 
 export const getProducts: APIGatewayProxyHandler = async () => {
-  console.log('INICIANDO LEITURA DE PRODUTOS');
+  // console.log('INICIANDO LEITURA DE PRODUTOS');
 
   try {
     const params = {
@@ -16,16 +16,26 @@ export const getProducts: APIGatewayProxyHandler = async () => {
     };
     const command = new ScanCommand(params);
     const result = await docClient.send(command);
+    const products = result.Items;
 
     if (!result.Items || result.Items.length === 0) {
       console.log("Nenhum item encontrado na tabela.");
       return {
         statusCode: 404,
-        body: JSON.stringify({ message: "Nenhum produto encontrado. Tabela vazia ou erro na leitura." }),
+        body: JSON.stringify({ message: "Nenhum produto encontrado." }),
       };
     }
 
-    console.log(`${result.Items.length} produtos lidos com sucesso.`);
+    // console.log(`${result.Items.length} produtos lidos com sucesso.`);
+    const orderedProducts = products.map((product) => {
+      return {
+        productId: product.productId,
+        category: product.category,
+        name: product.name,
+        price: product.price,
+        url: product.url,
+      };
+    });
 
     return {
       statusCode: 200,
@@ -33,7 +43,7 @@ export const getProducts: APIGatewayProxyHandler = async () => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(result.Items),
+      body: JSON.stringify(orderedProducts),
     };
 
   } catch (error) {
