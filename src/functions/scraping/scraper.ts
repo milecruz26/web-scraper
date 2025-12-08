@@ -19,13 +19,6 @@ export async function scrapingAmazonBestSellers(): Promise<Product[]> {
       const category = await product.$eval(".a-carousel-heading", item =>
         item.textContent?.trim().split("em ")[1] ?? null
       )
-      // const formattedCategory = category
-      //   ? `Os 3 ${category}`
-      //   : null;
-
-      // if (formattedCategory && !topProducts[formattedCategory]) {
-      //   topProducts[formattedCategory] = [];
-      // }
 
       const productCards = await product.$$(".a-carousel-card");
 
@@ -63,14 +56,6 @@ export async function scrapingAmazonBestSellers(): Promise<Product[]> {
             url: `https://www.amazon.com.br${productUrl}`,
           });
         }
-        // if (productName) {
-        //   topProducts[formattedCategory!].push({
-        //     productId: productId,
-        //     name: productName,
-        //     price: parsedPrice,
-        //     url: `https://www.amazon.com.br${productUrl}`,
-        //   });
-        // }
       }
 
     }

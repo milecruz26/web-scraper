@@ -1,7 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { scrapingAmazonBestSellers } from "../../../scraper";
-import { Product } from './../../interface/Product';
+import { scrapingAmazonBestSellers } from "./scraper";
+import { Product } from '../../interface/Product';
 
 const REGION = 'us-east-1';
 const TABLE_NAME = 'ProductsBestSellers';
@@ -9,7 +9,7 @@ const TABLE_NAME = 'ProductsBestSellers';
 const dbClient = new DynamoDBClient({ region: REGION });
 const dynamo = DynamoDBDocumentClient.from(dbClient);
 
-export async function handleScraperForDb() {
+export async function scraperForDb() {
   console.log('INICIANDO SCRAPING E ARMAZENAMENTO NO DYNAMONDB...');
 
   const response = {
