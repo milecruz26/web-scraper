@@ -46,7 +46,7 @@ const serverlessConfiguration: AWS = {
       minify: false,
       sourcemap: true,
       exclude: ['aws-sdk'],
-      externals: ['puppeteer-core', 'chromium-bidi', 'puppeteer'],
+      external: ['puppeteer-core', 'chromium-bidi', 'puppeteer'],
       target: 'node18',
       define: { 'require.resolve': undefined },
       platform: 'node',

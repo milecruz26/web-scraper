@@ -14,8 +14,10 @@
     "@aws-sdk/lib-dynamodb": "^3.943.0",
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
+    "@sparticuz/chromium": "^143.0.0",
     "dotenv": "^17.2.3",
-    "puppeteer": "^24.32.0"
+    "puppeteer": "^24.32.0",
+    "puppeteer-core": "^24.32.1"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",

@@ -1,9 +1,16 @@
-import * as puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+// import * as puppeteer from 'puppeteer';
 import { Product } from 'src/interface/Product';
+import chromium from '@sparticuz/chromium';
 
 export async function scrapingAmazonBestSellers(): Promise<Product[]> {
   console.log('INICIANDO SCRAPING...');
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: (chromium as any).defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: (chromium as any).headless,
+  });
   const page = await browser.newPage();
 
   await page.goto('https://www.amazon.com.br/bestsellers', { waitUntil: 'domcontentloaded' });
@@ -33,8 +40,8 @@ export async function scrapingAmazonBestSellers(): Promise<Product[]> {
         );
 
         const productPrice = await card.$eval(".a-color-price", item =>
-          item.textContent?.trim() ?? null
-        ).catch(() => null);
+          item.textContent?.trim() ?? 0
+        ).catch(() => 0);
 
         const parsedPrice =
           productPrice
