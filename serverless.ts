@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getProducts from '@functions/products';
 import scraper from '@functions/scraping';
+import getProductsByCategory from '@functions/productsByCategory';
 
 
 
@@ -35,8 +36,9 @@ const serverlessConfiguration: AWS = {
   },
 
   functions: {
-    getProducts: getProducts,
     scraper: scraper,
+    getProducts: getProducts,
+    getProductsByCategory: getProductsByCategory
 
   },
   package: { individually: true },
