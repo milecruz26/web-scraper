@@ -7,7 +7,6 @@ const dbClient = new DynamoDBClient({ region: REGION });
 const docClient = DynamoDBDocumentClient.from(dbClient);
 
 export const getProducts: APIGatewayProxyHandler = async () => {
-  // console.log('INICIANDO LEITURA DE PRODUTOS');
 
   try {
     const params = {
@@ -26,7 +25,6 @@ export const getProducts: APIGatewayProxyHandler = async () => {
       };
     }
 
-    // console.log(`${result.Items.length} produtos lidos com sucesso.`);
     const orderedProducts = products.map((product) => {
       return {
         productId: product.productId,

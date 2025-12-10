@@ -8,7 +8,6 @@ const dbClient = new DynamoDBClient({ region: REGION });
 const dynamo = DynamoDBDocumentClient.from(dbClient);
 
 export async function scraperForDb() {
-  // console.log('INICIANDO SCRAPING E ARMAZENAMENTO NO DYNAMONDB...');
 
   const response = {
     statusCode: 200,
@@ -17,7 +16,6 @@ export async function scraperForDb() {
   let productList: Product[] = [];
   try {
     productList = await scrapingAmazonBestSellers();
-    // console.log(`SCRAPING CONCLUÍDO! ${productList.length} produtos obtidos. INICIANDO SALVAMENTO NO DB...`);
 
   } catch (scrapError) {
     console.error("ERRO DURANTE O SCRAPING:", scrapError);
@@ -28,7 +26,6 @@ export async function scraperForDb() {
   const hasData = productList && productList.length > 0;
 
   if (hasData) {
-    // console.log(`Dados encontrados. Total de produtos: ${productList.length}`);
     let successCount = 0;
     let errorCount = 0;
 
