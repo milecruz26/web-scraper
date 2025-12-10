@@ -16,17 +16,24 @@ Este projeto demonstra a construção de um sistema de extração de dados de um
 - **AWS**
 
 ## Tecnologias 💻
-- **Puppeteer:** API de scraping utilizada no projeto para automatizar a navegação e extração de dados da página dos [produtos mais vendidos na Amazon](https://www.amazon.com.br/bestsellers)
-
+- **[Puppeteer:](https://pptr.dev/guides/getting-started)** API de scraping utilizada no projeto para automatizar a navegação e extração de dados da página dos [produtos mais vendidos na Amazon](https://www.amazon.com.br/bestsellers)
+---
 - **AWS Lambda:** Serviço de computação sem servidor (*Serverless*) que permite que funções sejam executadas em respostas a serviços. No projeto, foi utilizado para expor as funções da API (listagem, busca e exclusão), garantindo uma execução sob demanda com escalabilidade automática.
-
+![](/assets/LAMBDA.png)
+---
 - **AWS DynamonDB:** Serviço de banco de dados NoSQL que permite uma estrutura de tabela flexível, altamente escalável e baixa latência, ideal para armazenar e gerenciar os dados extraídos pelo web scraping.
-
+![](/assets/DYNAMOMDB.png)
+----
 - **AWS API Gateway:** Serviço de gestão de API. Foi utilizado no projeto para a criação de rotas, gerenciamento de endpoints, métodos HTTP e controle de acesso através do AWS IAM.
+![](/assets/API%20GATEWAY.png)
 
 ## Regras de negócios e Endpoints 👔
 
-### 1 - Scrapping e Persistência de dados:
+### 1 - Scrapping e Persistência de dados
+<p align="center" >
+  <img src="./assets/scraping.gif" alt="Vídeo demostrativo do scraping">
+</p>
+
 - **Objetivo:** Extrair os 3 primeiros produtos de cada categoria da página BestSellers e armazenar os dados no DynamoBD.
 - **Dados extraídos de cada produto:**
 
@@ -38,14 +45,14 @@ Este projeto demonstra a construção de um sistema de extração de dados de um
 | `price` | Number | Preço do produto extraído da string e transformado em número (float) |
 
 
-<p align="center" >
-  <img src="./assets/video-demonstrativo.gif" alt="Vídeo demostrativo da aplicação">
-</p>
 
 **A URL Base para consumir a API é:** 
 - *https://887dxij2o7.execute-api.sa-east-1.amazonaws.com/*
 
 ### 2 - Lista de todos os produtos
+<p align="center" >
+  <img src="./assets/VIDEO-LISTAR-PRODUTOS.gif" alt="Vídeo demostrativo da aplicação">
+</p>
 
 - **Objetivo:** Retorna uma lista com todos os produtos extraídos.
 - **URL:** [/dev/list-products]
@@ -73,6 +80,9 @@ Este projeto demonstra a construção de um sistema de extração de dados de um
   ```
 
 ### 3 - Listar por categoria
+<p align="center" >
+  <img src="./assets/LISTAR-PRODUTOS-CATEGORIA.gif" alt="Vídeo demostrativo da aplicação">
+</p>
 
 - **Objetivo:** Retorna uma lista com os produtos organizados por categoria.
 - **URL:** [dev/list-products/grouped]
@@ -99,6 +109,9 @@ Este projeto demonstra a construção de um sistema de extração de dados de um
     ]
   ```
 ### 4 - Pesquisar produto
+<p align="center" >
+  <img src="./assets/PESQUISAR POR PRODUTO.gif" alt="Vídeo demostrativo da aplicação">
+</p>
 
 - **Objetivo:** Retorna o produto pesquisado pelo productId
 - **URL:** [/dev/product/B076N2S8FV]
@@ -119,6 +132,10 @@ Este projeto demonstra a construção de um sistema de extração de dados de um
 
 ### 5 - Deletar produto
 
+<p align="center" >
+  <img src="./assets/DELETAR PRODUTO.gif" alt="Vídeo demostrativo da aplicação">
+</p>
+
 - **Objetivo:** Deleta produto pelo productId
 - **URL:** [dev/product/B076N2S8FV]
 - **Método:** DELETE
@@ -130,3 +147,5 @@ Este projeto demonstra a construção de um sistema de extração de dados de um
 	"message": "Produto com ID B01CZXF4XW deletado com sucesso."
   }
   ```
+
+ 
