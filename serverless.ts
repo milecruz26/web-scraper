@@ -1,7 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
 import getProducts from '@functions/products';
-import scraper from '@functions/scraping';
 import getProductsByCategory from '@functions/productsByCategory';
 import getProductById from '@functions/products/getProductById';
 import deleteProductById from '@functions/products/deleteProductById';
@@ -12,10 +11,13 @@ import deleteProductById from '@functions/products/deleteProductById';
 const serverlessConfiguration: AWS = {
   service: 'web-scraper',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: [
+    'serverless-esbuild',
+    'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs20.x',
+    region: 'sa-east-1',
     iamRoleStatements: [
       {
         Effect: 'Allow',
@@ -39,7 +41,6 @@ const serverlessConfiguration: AWS = {
   },
 
   functions: {
-    scraper: scraper,
     getProducts: getProducts,
     getProductsByCategory: getProductsByCategory,
     getProductById: getProductById,
@@ -53,7 +54,6 @@ const serverlessConfiguration: AWS = {
       minify: false,
       sourcemap: true,
       exclude: ['aws-sdk'],
-      external: ['puppeteer-core', 'chromium-bidi', 'puppeteer'],
       target: 'node18',
       define: { 'require.resolve': undefined },
       platform: 'node',
