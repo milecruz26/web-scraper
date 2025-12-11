@@ -43,6 +43,7 @@ Este projeto demonstra a construção de um sistema de extração de dados de um
 | `name` | String | Nome do produto |
 | `category` | String | Categoria que se encontra o produto |
 | `price` | Number | Preço do produto extraído da string e transformado em número (float) |
+| `url` | String | URL de cada produto |
 
 
 
